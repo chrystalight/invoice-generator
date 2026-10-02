@@ -366,7 +366,7 @@
         </div>
       </div>
       <label>E-transfer Email</label>
-      <input type="email" id="payEmail" value="catieeleanor@gmail.com">
+      <input type="email" id="payEmail" value="info@whimsyworks.ca">
     </fieldset>
 
     <fieldset>
@@ -596,7 +596,7 @@ function loadInvoiceData(event){
       document.getElementById('dueDate').value = data.dueDate || '';
       document.getElementById('clientName').value = data.clientName || '';
       document.getElementById('clientAddr').value = data.clientAddr || '';
-      document.getElementById('payEmail').value = data.payEmail || 'catieeleanor@gmail.com';
+      document.getElementById('payEmail').value = data.payEmail || 'info@whimsyworks.ca';
       document.getElementById('footerNote').value = data.footerNote || '';
       document.getElementById('paidDate').value = data.paidDate || '';
       document.getElementById('paidAmount').value = data.paidAmount || '';
@@ -633,7 +633,7 @@ function renderInvoice(){
   const dueDate = document.getElementById('dueDate').value || 'N/A';
   const clientName = document.getElementById('clientName').value || 'Client Name';
   const clientAddr = document.getElementById('clientAddr').value || '';
-  const payEmail = document.getElementById('payEmail').value || 'catieeleanor@gmail.com';
+  const payEmail = document.getElementById('payEmail').value || 'info@whimsyworks.ca';
   const footerNote = document.getElementById('footerNote').value || '';
   const paidDate = document.getElementById('paidDate').value;
   const paidAmount = parseFloat(document.getElementById('paidAmount').value) || 0;
