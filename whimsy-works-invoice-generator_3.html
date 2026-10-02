@@ -270,11 +270,13 @@
   }
 
   @media print{
+    @page{ size: letter; margin: 10mm; }
     body{ background:#fff; }
     .form-panel{ display:none; }
     .app{ display:block; }
-    .preview-panel{ padding:0; }
-    .invoice{ box-shadow:none; width:100%; }
+    .preview-panel{ padding:0; display:block; overflow:visible; }
+    /* Force the full desktop layout so mobile printing isn't squished. */
+    .invoice{ box-shadow:none; width:800px; max-width:800px; margin:0 auto; }
   }
 </style>
 </head>
@@ -499,9 +501,15 @@ async function downloadPDF(){
   const originalLabel = btn.innerHTML;
   btn.innerHTML = 'Generating PDF...';
   btn.disabled = true;
+  const el = document.getElementById('invoicePreview');
+  // Force the full desktop width while capturing so mobile screens don't
+  // produce a squished, phone-width invoice in the PDF.
+  const prevWidth = el.style.width;
+  const prevMaxWidth = el.style.maxWidth;
+  el.style.width = '800px';
+  el.style.maxWidth = 'none';
   try{
-    const el = document.getElementById('invoicePreview');
-    const canvas = await html2canvas(el, { scale: 2, backgroundColor: '#ffffff', useCORS: true });
+    const canvas = await html2canvas(el, { scale: 2, backgroundColor: '#ffffff', useCORS: true, windowWidth: 1200, width: 800 });
     const imgData = canvas.toDataURL('image/png');
     const { jsPDF } = window.jspdf;
 
@@ -533,6 +541,8 @@ async function downloadPDF(){
     console.error(err);
     hint.textContent = 'Something went wrong generating the PDF (this needs an internet connection to load the PDF library). You can still use your browser\'s Print → Save as PDF as a backup.';
   } finally {
+    el.style.width = prevWidth;
+    el.style.maxWidth = prevMaxWidth;
     btn.innerHTML = originalLabel;
     btn.disabled = false;
   }
